@@ -6,7 +6,7 @@ LogLens converts structured log entries into severity counts and frequent-error 
 
 ## Project status
 
-**Early development.** The command-line prototype, sample data, and four unit tests are implemented locally. This repository currently contains documentation; the source files have not yet been published.
+**Early development.** The repository includes a working command-line prototype, synthetic sample logs, and four passing unit tests.
 
 Database storage, an API, a web interface, and anomaly detection are planned features.
 
@@ -25,7 +25,14 @@ Database storage, an API, a web interface, and anomaly detection are planned fea
 
 ## Usage
 
-Run the following commands from the local project directory containing the `loglens/`, `data/`, and `tests/` folders. These commands require the local source files and will not work from a clone of this documentation-only repository yet.
+Clone the repository and enter the project directory:
+
+```sh
+git clone https://github.com/dparmar7/loglens.git
+cd loglens
+```
+
+Run the following commands from this directory.
 
 Summarize a log file:
 
@@ -93,12 +100,11 @@ The four existing tests cover message separators, invalid fields, service filter
 
 ## Roadmap
 
-1. Publish the local source code, sample logs, and tests.
-2. Add structured JSON output and command-line failure tests.
-3. Introduce SQLite storage and queries by service and time.
-4. Build a REST API and an investigation interface.
-5. Evaluate anomaly detection against a simple baseline using held-out data.
-6. Add automated checks, container packaging, and a deployed demonstration.
+1. Add structured JSON output and command-line failure tests.
+2. Introduce SQLite storage and queries by service and time.
+3. Build a REST API and an investigation interface.
+4. Evaluate anomaly detection against a simple baseline using held-out data.
+5. Add automated checks, container packaging, and a deployed demonstration.
 
 ## Limitations
 
