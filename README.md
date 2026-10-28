@@ -6,7 +6,7 @@ LogLens converts structured log entries into severity counts and frequent-error 
 
 ## Project status
 
-**Early development.** The repository includes a working command-line prototype, synthetic sample logs, and four passing unit tests.
+**Early development.** The repository includes a working command-line prototype, synthetic sample logs, and seven passing tests.
 
 Database storage, an API, a web interface, and anomaly detection are planned features.
 
@@ -96,11 +96,11 @@ Run the local test suite:
 python3 -m unittest discover -s tests -v
 ```
 
-The four existing tests cover message separators, invalid fields, service filtering and counts, blank lines, and empty files.
+The seven tests cover parsing, message separators, invalid fields, service filtering and counts, blank lines, empty files, and command-line behavior. CLI tests run LogLens in a separate Python process to verify output, exit codes, and clear error messages for missing files and required arguments.
 
 ## Roadmap
 
-1. Add structured JSON output and command-line failure tests.
+1. Add structured JSON output.
 2. Introduce SQLite storage and queries by service and time.
 3. Build a REST API and an investigation interface.
 4. Evaluate anomaly detection against a simple baseline using held-out data.
