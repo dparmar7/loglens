@@ -1,6 +1,7 @@
 """Command-line entry point: python -m loglens summarize FILE."""
 
 import argparse
+import json
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
@@ -50,11 +51,23 @@ def main():
     summary = commands.add_parser("summarize", help="Count entries and errors")
     summary.add_argument("file", type=Path)
     summary.add_argument("--service", help="Only count this service")
+    summary.add_argument("--json", action="store_true", help="Output a JSON summary")
     args = parser.parse_args()
     try:
         result = summarize(args.file, args.service)
     except (OSError, UnicodeError) as error:
         parser.exit(1, f"Could not read log file: {error}\n")
+    if args.json:
+        output = {
+            "total": result["total"],
+            "severities": {level: result["severities"][level] for level in
+                           ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")},
+            "malformed": result["malformed"],
+            "top_errors": [{"message": message, "count": count}
+                           for message, count in result["errors"].most_common(5)],
+        }
+        print(json.dumps(output, indent=2))
+        return
     print(f"Total entries: {result['total']}")
     for severity in ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"):
         print(f"{severity}: {result['severities'][severity]}")
