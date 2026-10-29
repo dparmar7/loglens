@@ -6,7 +6,7 @@ LogLens converts structured log entries into severity counts and frequent-error 
 
 ## Project status
 
-**Early development.** The repository includes a working command-line prototype, synthetic sample logs, and seven passing tests.
+**Early development.** The repository includes a working command-line prototype, synthetic sample logs, and nine passing tests.
 
 Database storage, an API, a web interface, and anomaly detection are planned features.
 
@@ -45,6 +45,16 @@ Filter by service:
 ```sh
 python3 -m loglens summarize data/sample.log --service api
 ```
+
+### JSON output
+
+Export a summary that other programs can read:
+
+```sh
+python3 -m loglens summarize data/sample.log --json
+```
+
+Combine `--json` with `--service api` to export only that service. Successful JSON output contains `total`, `severities` (all five levels, including zeros), `malformed` (whole-file count), and `top_errors` (up to five objects with `message` and `count`). Empty input produces zero counts and an empty error list. File errors still appear on stderr with a nonzero exit code.
 
 ### Example output
 
@@ -96,15 +106,15 @@ Run the local test suite:
 python3 -m unittest discover -s tests -v
 ```
 
-The seven tests cover parsing, message separators, invalid fields, service filtering and counts, blank lines, empty files, and command-line behavior. CLI tests run LogLens in a separate Python process to verify output, exit codes, and clear error messages for missing files and required arguments.
+The nine tests cover parsing, message separators, invalid fields, service filtering and counts, blank lines, empty files, and command-line behavior. CLI tests run LogLens in a separate Python process to verify output, exit codes, and clear error messages for missing files and required arguments. JSON tests verify service filtering, malformed-line counts, empty input, and preservation of quoted messages.
 
 ## Roadmap
 
-1. Add structured JSON output.
+1. Expand log querying and storage.
 2. Introduce SQLite storage and queries by service and time.
 3. Build a REST API and an investigation interface.
 4. Evaluate anomaly detection against a simple baseline using held-out data.
-5. Add automated checks, container packaging, and a deployed demonstration.
+5. Add container packaging and a deployed demonstration.
 
 ## Limitations
 
